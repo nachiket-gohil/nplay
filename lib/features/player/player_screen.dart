@@ -90,61 +90,52 @@ class _PlayerScreenState extends State<PlayerScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("N Player"), centerTitle: true),
+      appBar: AppBar(
+        title: const Text("N Player"),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Stack(
           children: [
             // Main player content
             Padding(
-              padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
+              padding: const EdgeInsets.all(18),
               child: Column(
                 children: [
                   // Album art / disc
                   Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.width - 36,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(22),
-                      color: Colors.white.withOpacity(0.06),
-                      border: Border.all(color: Colors.white.withOpacity(0.08)),
-                    ),
-                    child: Center(
-                      child: RotationTransition(
-                        turns: _discController,
-                        child: Container(
-                          width: 220,
-                          height: 220,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white.withOpacity(0.08),
-                            border: Border.all(
-                                color: Colors.white.withOpacity(0.10)),
-                          ),
-                          child: Image.asset("assets/disc.png"),
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    height: MediaQuery.of(context).size.width * 0.6,
+                    margin: const EdgeInsets.only(top: 50),
+                    alignment: Alignment.center,
+                    child: RotationTransition(
+                      turns: _discController,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: MediaQuery.of(context).size.width * 0.5,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.08),
+                          border: Border.all(color: Colors.black),
                         ),
+                        child: Image.asset("assets/disc.png"),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
 
-                  Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w800),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 6),
-
-                  Align(
-                    alignment: Alignment.centerLeft,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 18),
                     child: Text(
-                      "Local file playback",
-                      style: TextStyle(color: Colors.white.withOpacity(0.65)),
+                      title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: 18),
 
                   // time --- seekbar --- total time row
                   StreamBuilder<Duration?>(
@@ -167,10 +158,15 @@ class _PlayerScreenState extends State<PlayerScreen>
                           return Row(
                             children: [
                               SizedBox(
-                                width: 52,
-                                child: Text(
-                                  _fmt(pos),
-                                  style: const TextStyle(color: Colors.black),
+                                width: MediaQuery.of(context).size.width * 0.12,
+                                child: Center(
+                                  child: Text(
+                                    _fmt(pos),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -184,11 +180,15 @@ class _PlayerScreenState extends State<PlayerScreen>
                                 ),
                               ),
                               SizedBox(
-                                width: 52,
-                                child: Text(
-                                  _fmt(total),
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(color: Colors.black),
+                                width: MediaQuery.of(context).size.width * 0.12,
+                                child: Center(
+                                  child: Text(
+                                    _fmt(total),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -198,7 +198,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                     },
                   ),
 
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 24),
 
                   // Controls: restart, play/pause (clean), lyrics toggle
                   StreamBuilder<PlayerState>(
@@ -223,7 +223,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
                             child: IconButton(
                               tooltip: "Restart",
                               onPressed: () {
@@ -266,7 +266,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
                             child: IconButton(
                               tooltip:
                                   _lyricsOpen ? "Hide lyrics" : "Show lyrics",
